@@ -1,0 +1,58 @@
+import { IUser } from "../../interfaces/user";
+
+export const data: Array<IUser> = [
+  {
+    id: 1,
+    name: "root",
+    password: "root",
+    email: "root@softplan.com",
+    isActive: true,
+    role: "ADMIN",
+    job: "CTO",
+  },
+  {
+    id: 2,
+    name: "root",
+    password: "root",
+    email: "root@softplan.com",
+    isActive: true,
+    role: "ADMIN",
+    job: "CTO",
+  },
+  {
+    id: 3,
+    name: "root",
+    password: "root",
+    email: "root@softplan.com",
+    isActive: true,
+    role: "ADMIN",
+    job: "CTO",
+  },
+  {
+    id: 4,
+    name: "root",
+    password: "root",
+    email: "root@softplan.com",
+    isActive: true,
+    role: "ADMIN",
+    job: "CTO",
+  },
+  {
+    id: 5,
+    name: "root",
+    password: "root",
+    email: "root@softplan.com",
+    isActive: true,
+    role: "ADMIN",
+    job: "CTO",
+  },
+  {
+    id: 6,
+    name: "root",
+    password: "root",
+    email: "root@softplan.com",
+    isActive: true,
+    role: "ADMIN",
+    job: "CTO",
+  },
+];
