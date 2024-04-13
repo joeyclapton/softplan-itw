@@ -1,11 +1,6 @@
 import { IUser } from "../../interfaces/user";
-import { data } from "./mock";
 
 export default class UserService {
-  initialize(users: Array<IUser>) {
-    localStorage.setItem("users", JSON.stringify(users));
-  }
-
   getAll() {
     const users = localStorage.getItem("users");
 
@@ -35,16 +30,18 @@ export default class UserService {
 
   delete(id: number) {
     const users = this.getAll();
-
-    const usersUpdated = users.filter((user: IUser) => user.id !== id);
-
-    localStorage.setItem("users", usersUpdated);
+    console.log(id);
+    const usersUpdated = users.filter((user: IUser) => {
+      return user.id !== id;
+    });
+    console.log(usersUpdated);
+    localStorage.setItem("users", JSON.stringify(usersUpdated));
   }
 
   getUserByLogin(email: string, password: string): IUser {
     const users = this.getAll();
 
-    return users.filter((user: IUser) => {
+    return users.find((user: IUser) => {
       return user.email === email && user.password === password;
     });
   }
