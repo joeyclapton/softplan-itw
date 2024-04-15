@@ -17,11 +17,13 @@ const nextAuthOptions: NextAuthOptions = {
           method: "GET",
         });
         const users = await response.json();
-        const userByLogin = users?.filter((user) => {
+        const userByLogin = users?.find((user) => {
           return user.email === credentials?.email || user.password === credentials?.password;
         });
 
-        if (userByLogin) return userByLogin;
+        if (userByLogin) {
+          return userByLogin;
+        }
 
         return null;
       },
@@ -34,4 +36,4 @@ const nextAuthOptions: NextAuthOptions = {
 
 const handler = NextAuth(nextAuthOptions);
 
-export { handler as GET, handler as POST };
+export { handler as GET, handler as POST, nextAuthOptions };
