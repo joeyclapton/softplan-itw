@@ -1,4 +1,5 @@
-import LoginService from "@/app/shared/services/login";
+import { IUser } from "@/app/shared/interfaces/user";
+import UserService from "@/app/shared/services/users";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -11,14 +12,11 @@ const nextAuthOptions: NextAuthOptions = {
         password: { label: "password", type: "password" },
       },
 
-      async authorize(credentials, req) {
-        const url = "https://661d62bd98427bbbef01aea6.mockapi.io/api/v1/users";
-        const response = await fetch(url, {
-          method: "GET",
-        });
-        const users = await response.json();
-        const userByLogin = users?.find((user) => {
-          return user.email === credentials?.email || user.password === credentials?.password;
+      async authorize(credentials, req): Promise<any> {
+        const userService = new UserService();
+        const users = await userService.getAll();
+        const userByLogin = users?.find(({ email, password }) => {
+          return email === credentials?.email && password === credentials?.password;
         });
 
         if (userByLogin) {
@@ -31,6 +29,18 @@ const nextAuthOptions: NextAuthOptions = {
   ],
   pages: {
     signIn: "/",
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      user && (token.user = user);
+
+      return token;
+    },
+    async session({ session, token }) {
+      session = token.user as any;
+
+      return session;
+    },
   },
 };
 
