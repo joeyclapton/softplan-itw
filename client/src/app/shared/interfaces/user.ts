@@ -1,9 +1,10 @@
 export interface IUser {
-  id: number;
+  id?: number;
+  isAdmin?: boolean;
+  createdAt?: string;
   name: string;
   email: string;
   password: string;
   job: string;
-  isActive: boolean;
-  role: "ADMIN" | "USER";
+  avatar: string;
 }
