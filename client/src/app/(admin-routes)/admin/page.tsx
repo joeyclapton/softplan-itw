@@ -1,7 +1,7 @@
 import { nextAuthOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
-import UsersTable from "@/app/components/UsersTable";
-import MenuBar from "@/app/components/MenuBar";
+import UsersTable from "@/components/UsersTable";
+import MenuBar from "@/components/MenuBar";
 import { useRouter } from "next/navigation";
 
 const AdminPage = async ({ data }: any) => {

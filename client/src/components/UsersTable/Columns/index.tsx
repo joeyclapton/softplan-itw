@@ -16,7 +16,7 @@ import CreateAndEditUser from "../../CreateAndEditUser";
 const columns = (user, onFetchData: (id: number) => void) => {
   const userService = new UserService();
   const isAdmin = user.user.isAdmin;
-  console.log(isAdmin);
+
   const actions = {
     id: "actions",
     enableHiding: false,
