@@ -79,3 +79,7 @@ html,
 body {
   height: 100%;
 }
+
+body {
+  background-color: #25afc205;
+}
