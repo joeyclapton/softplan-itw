@@ -26,7 +26,7 @@ describe('UserService', () => {
     expect(mockFetch).toHaveBeenCalledWith(`${userService.url}/${userId}`, { method: "DELETE" });
   });
 
-  it('should update an user', async () => {
+  it('should update a user', async () => {
     const user = { id: 1, name: 'Teste', email: 'testing@gmail.com', password: 'password', job: 'Tester', avatar: 'https://myavatar/avatar.png' };
 
     await userService.updateUser(user);
@@ -40,7 +40,7 @@ describe('UserService', () => {
     });
   });
 
-  it('deve criar um usuário', async () => {
+  it('should create a user', async () => {
     const user = { id: 1, name: 'Teste', email: 'testing@gmail.com', password: 'password', job: 'Tester', avatar: 'https://myavatar/avatar.png' };
 
     await userService.create(user);
