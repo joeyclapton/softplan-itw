@@ -1,6 +1,8 @@
 "use client";
 
 import * as React from "react";
+import { useAtom } from 'jotai'
+import { fetchUsers, usersAtom } from "@/app/shared/state/usersState";
 import { CaretSortIcon, ChevronDownIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
 import {
   ColumnDef,
@@ -30,6 +32,7 @@ import {
 import { Toaster } from "react-hot-toast";
 
 import columns from "./Columns";
+import { useEffect } from "react";
 
 const UsersTable = (user) => {
   const userService = new UserService();
@@ -37,28 +40,15 @@ const UsersTable = (user) => {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-  const [data, setData] = React.useState<Array<IUser>>([]);
+  const [users, setUsers] = useAtom(usersAtom);
 
-  const getAll = async () => {
-    const users = await userService.getAll();
-    setData(users);
-  };
-
-  const updateListWithoutId = (id: number) => {
-    const updated = data?.filter((user) => {
-      return user.id !== id;
-    });
-    setData(updated);
-  };
-
-  React.useEffect(() => {
-    getAll();
+  useEffect(() => {
+    fetchUsers(setUsers);
   }, []);
 
   const table = useReactTable({
-    data,
+    data: users,
     columns: columns(user, (id: number) => {
-      updateListWithoutId(id);
     }),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,

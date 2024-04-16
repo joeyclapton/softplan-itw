@@ -7,15 +7,18 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { CaretSortIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
-import UserService from "@/app/shared/services/users";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
 import toast from "react-hot-toast";
 import CreateAndEditUser from "../../CreateAndEditUser";
+import { useAtom } from "jotai";
+import {
+  deleteUser,
+  usersAtom,
+} from "@/app/shared/state/usersState";
 
 const columns = (user, onFetchData: (id: number) => void) => {
-  const userService = new UserService();
   const isAdmin = user.user.isAdmin;
+  const [_, setUsers] = useAtom(usersAtom);
 
   const actions = {
     id: "actions",
@@ -43,8 +46,8 @@ const columns = (user, onFetchData: (id: number) => void) => {
               className="block text-sm px-4 py-2 text-red-500 hover:bg-red-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
               onClick={() => {
                 try {
-                  userService.delete(id);
                   onFetchData(id);
+                  deleteUser(id)(setUsers);
                   toast(`Usuário ${name} removido`, {
                     icon: "✅",
                   });

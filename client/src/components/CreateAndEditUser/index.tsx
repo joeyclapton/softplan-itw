@@ -1,5 +1,6 @@
 "use client";
-
+import { useAtom } from 'jotai'
+import { editUser, addUser, usersAtom } from "@/app/shared/state/usersState";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import {
@@ -27,7 +28,7 @@ type Props = {
 };
 
 const CreateAndEditUser = ({ children, user, action }: Props) => {
-  const userService = new UserService();
+  const [users, setUsers] = useAtom(usersAtom);
   const isCreate = action === "create";
   const defaultValues =
     action === "create"
@@ -63,13 +64,13 @@ const CreateAndEditUser = ({ children, user, action }: Props) => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       if (isCreate) {
-        await userService.create(values);
+        await addUser(values)(setUsers);
         toast("User has been created", {
           icon: "✅",
         });
         return;
       }
-      await userService.updateUser({ ...values, id: user.id });
+      await editUser({...values, id: user.id})(setUsers);
       toast("User has been updated", {
         icon: "✅",
       });
