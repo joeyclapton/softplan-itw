@@ -36,7 +36,7 @@ export default function ProfileForm() {
     });
 
     if (result?.error) {
-      toast.error("Usuário não encontrado, verifique seus dados.");
+      toast.error("Usuário não encontrado");
       return;
     }
 
@@ -69,7 +69,7 @@ export default function ProfileForm() {
               control={form.control}
               name="password"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="mt-4">
                   <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input placeholder="Password" type="password" {...field} />
