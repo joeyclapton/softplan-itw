@@ -11,7 +11,7 @@ import UserService from "@/app/shared/services/users";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import toast from "react-hot-toast";
-import CreateUser from "../../CreateUser";
+import CreateAndEditUser from "../../CreateAndEditUser";
 
 const columns = (user, onFetchData: (id: number) => void) => {
   const userService = new UserService();
@@ -21,7 +21,7 @@ const columns = (user, onFetchData: (id: number) => void) => {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const { id } = row.original;
+      const { id, name } = row.original;
 
       return (
         <DropdownMenu>
@@ -34,18 +34,20 @@ const columns = (user, onFetchData: (id: number) => void) => {
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
-            <CreateUser user={row.original} action="edit">
+            <CreateAndEditUser user={row.original} action="edit">
               <span className="block text-sm px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer">
                 Edit
               </span>
-            </CreateUser>
+            </CreateAndEditUser>
             <span
               className="block text-sm px-4 py-2 text-red-500 hover:bg-red-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
               onClick={() => {
                 try {
                   userService.delete(id);
                   onFetchData(id);
-                  toast("Usuário removido com sucesso ✅");
+                  toast(`Usuário ${name} removido`, {
+                    icon: "✅",
+                  });
                 } catch (error) {
                   toast.error("Erro ao remover usuário, tente novamente ou entre em contato com o suporte...");
                 }

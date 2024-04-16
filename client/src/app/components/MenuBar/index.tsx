@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import ChangePassword from "../ChangePassword";
-import CreateUser from "../CreateUser";
+import CreateAndEditUser from "../CreateAndEditUser";
 import { signOut } from "next-auth/react";
 
 const MenuBar = (user) => {
@@ -39,7 +39,7 @@ const MenuBar = (user) => {
             </button>
           </ChangePassword>
           {isAdmin ? (
-            <CreateUser user={user.user} action="create">
+            <CreateAndEditUser user={user.user} action="create">
               <div className="flex items-center justify-center">
                 <button
                   data-tooltip-target="tooltip-new"
@@ -64,7 +64,7 @@ const MenuBar = (user) => {
                   <span className="sr-only">New item</span>
                 </button>
               </div>
-            </CreateUser>
+            </CreateAndEditUser>
           ) : (
             ""
           )}

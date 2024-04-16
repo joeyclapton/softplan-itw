@@ -26,7 +26,7 @@ type Props = {
   user: IUser;
 };
 
-const CreateUser = ({ children, user, action }: Props) => {
+const CreateAndEditUser = ({ children, user, action }: Props) => {
   const userService = new UserService();
   const isCreate = action === "create";
   const defaultValues =
@@ -184,4 +184,4 @@ const CreateUser = ({ children, user, action }: Props) => {
   );
 };
 
-export default CreateUser;
+export default CreateAndEditUser;
