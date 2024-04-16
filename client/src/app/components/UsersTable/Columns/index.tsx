@@ -11,6 +11,7 @@ import UserService from "@/app/shared/services/users";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import toast from "react-hot-toast";
+import CreateUser from "../../CreateUser";
 
 const columns = (user, onFetchData: (id: number) => void) => {
   const userService = new UserService();
@@ -33,9 +34,13 @@ const columns = (user, onFetchData: (id: number) => void) => {
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem
-              className="cursor-pointer"
+            <CreateUser user={row.original} action="edit">
+              <span className="block text-sm px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer">
+                Edit
+              </span>
+            </CreateUser>
+            <span
+              className="block text-sm px-4 py-2 text-red-500 hover:bg-red-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
               onClick={() => {
                 try {
                   userService.delete(id);
@@ -47,7 +52,7 @@ const columns = (user, onFetchData: (id: number) => void) => {
               }}
             >
               Delete
-            </DropdownMenuItem>
+            </span>
           </DropdownMenuContent>
         </DropdownMenu>
       );

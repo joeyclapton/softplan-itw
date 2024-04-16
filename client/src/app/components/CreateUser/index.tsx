@@ -18,13 +18,32 @@ import toast from "react-hot-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { IUser } from "@/app/shared/interfaces/user";
 
 type Props = {
   children: React.ReactNode;
+  action: "create" | "edit";
+  user: IUser;
 };
 
-const CreateUser = ({ children }: Props) => {
+const CreateUser = ({ children, user, action }: Props) => {
   const userService = new UserService();
+  const isCreate = action === "create";
+  const defaultValues =
+    action === "create"
+      ? {
+          email: "",
+          password: "",
+          name: "",
+          avatar: "",
+          job: "",
+        }
+      : {
+          email: user.email,
+          name: user.name,
+          avatar: user.avatar,
+          job: user.job,
+        };
 
   const formSchema = z.object({
     name: z.string().min(2),
@@ -36,23 +55,29 @@ const CreateUser = ({ children }: Props) => {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-      name: "",
-      avatar: "",
-      job: "",
-    },
+    defaultValues,
   });
 
   const [isFormValid, setIsFormValid] = useState(false);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await userService.create(values);
-      toast("User has been created :)");
+      if (isCreate) {
+        await userService.create(values);
+        toast("User has been created", {
+          icon: "✅",
+        });
+        return;
+      }
+      await userService.updateUser({ ...values, id: user.id });
+      toast("User has been updated", {
+        icon: "✅",
+      });
+    } catch (error) {
+      isCreate ? toast.error("Error on create user, try again.") : toast.error("Error on updated user, try again.");
+    } finally {
       form.reset();
-    } catch (error) {}
+    }
   };
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -72,7 +97,7 @@ const CreateUser = ({ children }: Props) => {
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>Create a new user</DialogTitle>
+          <DialogTitle>{isCreate ? "Create a new user" : "Update your informations"}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={handleFormSubmit} className="w-full items-center justify-center gap-4 space-y-8">
@@ -102,19 +127,23 @@ const CreateUser = ({ children }: Props) => {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Password" type="password" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {action === "create" ? (
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Password" type="password" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            ) : (
+              ""
+            )}
             <FormField
               control={form.control}
               name="job"
@@ -135,7 +164,7 @@ const CreateUser = ({ children }: Props) => {
                 <FormItem>
                   <FormLabel>Avatar</FormLabel>
                   <FormControl>
-                    <Input placeholder="Avatar" type="text" {...field} />
+                    <Input placeholder="Avatar url" type="text" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -144,7 +173,7 @@ const CreateUser = ({ children }: Props) => {
             <DialogFooter>
               <DialogClose asChild>
                 <Button type="submit" disabled={!isFormValid}>
-                  Create
+                  {isCreate ? "Create" : "Update"}
                 </Button>
               </DialogClose>
             </DialogFooter>
