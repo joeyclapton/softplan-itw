@@ -1,48 +1,38 @@
 import { IUser } from "../../interfaces/user";
 
 export default class UserService {
-  getAll() {
-    const users = localStorage.getItem("users");
+  url = "https://661d62bd98427bbbef01aea6.mockapi.io/api/v1/users";
 
-    if (users) {
-      return JSON.parse(users);
-    }
+  async getAll(): Promise<IUser[]> {
+    const response = await fetch(this.url, { method: "GET" });
+    const data = await response.json();
 
-    return [];
+    return data;
   }
 
-  create(user: IUser) {
-    const users = this.getAll();
-    users.push(user);
-
-    localStorage.setItem("users", users);
+  async delete(id: number): Promise<any> {
+    await fetch(`${this.url}/${id}`, { method: "DELETE" });
   }
 
-  updatePassword(id: number, newPassword: string) {
-    const users = this.getAll();
-    const usersUpdated = users.map((user: IUser) => {
-      if (user.id === id) user.password = newPassword;
+  async updateUser(user: IUser): Promise<any> {
+    const { id } = user;
 
-      return user;
+    await fetch(`${this.url}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
     });
-    localStorage.setItem("users", usersUpdated);
   }
 
-  delete(id: number) {
-    const users = this.getAll();
-    console.log(id);
-    const usersUpdated = users.filter((user: IUser) => {
-      return user.id !== id;
-    });
-    console.log(usersUpdated);
-    localStorage.setItem("users", JSON.stringify(usersUpdated));
-  }
-
-  getUserByLogin(email: string, password: string): IUser {
-    const users = this.getAll();
-
-    return users.find((user: IUser) => {
-      return user.email === email && user.password === password;
+  async create(user: IUser): Promise<any> {
+    await fetch(`${this.url}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
     });
   }
 }
