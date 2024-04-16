@@ -4,10 +4,15 @@ export default class UserService {
   url = "https://661d62bd98427bbbef01aea6.mockapi.io/api/v1/users";
 
   async getAll(): Promise<IUser[]> {
-    const response = await fetch(this.url, { method: "GET" });
-    const data = await response.json();
-
-    return data;
+    try {
+      const response = await fetch(this.url, { method: "GET" });
+      if (!response?.ok) return []
+      
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      throw error;
+    }
   }
 
   async delete(id: number): Promise<any> {
