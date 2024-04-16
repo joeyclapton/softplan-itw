@@ -24,8 +24,6 @@ import UserService from "@/app/shared/services/users";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuTrigger,
   DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
@@ -34,7 +32,11 @@ import { Toaster } from "react-hot-toast";
 import columns from "./Columns";
 import { useEffect } from "react";
 
-const UsersTable = (user) => {
+type Props = {
+  user: IUser;
+}
+
+const UsersTable = ({ user }: Props) => {
   const userService = new UserService();
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
@@ -48,8 +50,7 @@ const UsersTable = (user) => {
 
   const table = useReactTable({
     data: users,
-    columns: columns(user, (id: number) => {
-    }),
+    columns: columns({ user }),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),

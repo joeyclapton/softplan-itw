@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, ReactNode } from "react";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,16 +16,23 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import UserService from "@/app/shared/services/users";
+import { IUser } from "@/app/shared/interfaces/user";
 
-const ChangePassword = ({ children, user }) => {
+type Props = {
+  children: ReactNode;
+  user: IUser;
+}
+
+const ChangePassword = ({ children, user }: Props) => {
   const [password, setPassword] = useState<string>("");
   const userService = new UserService();
-  const _user = user.user;
+
   const onSubmit = (event) => {
     event.preventDefault();
+    
     try {
       userService.updateUser({
-        ..._user,
+        ...user,
         password,
       });
       toast("Updated password", {
@@ -49,9 +56,9 @@ const ChangePassword = ({ children, user }) => {
         <DialogHeader>
           <div className="mb-8">
             <div className="flex flex-col items-center">
-              <img className="w-24 h-24 mb-3 rounded-full shadow-lg" src={_user.avatar} alt={_user?.name} />
-              <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">{_user?.name}</h5>
-              <span className="text-sm text-gray-500 dark:text-gray-400">{_user.job}</span>
+              <img className="w-24 h-24 mb-3 rounded-full shadow-lg" src={user.avatar} alt={user?.name} />
+              <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">{user?.name}</h5>
+              <span className="text-sm text-gray-500 dark:text-gray-400">{user.job}</span>
             </div>
           </div>
           <div>

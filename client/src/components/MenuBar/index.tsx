@@ -4,10 +4,15 @@ import { useRouter } from "next/navigation";
 import ChangePassword from "../ChangePassword";
 import CreateAndEditUser from "../CreateAndEditUser";
 import { signOut } from "next-auth/react";
+import { IUser } from "@/app/shared/interfaces/user";
 
-const MenuBar = (user) => {
+type Props = {
+  user: IUser
+}
+
+const MenuBar = ({ user }: Props) => {
   const router = useRouter();
-  const isAdmin = user?.user?.isAdmin;
+  const isAdmin = user?.isAdmin;
 
   const onLogout = async () => {
     await signOut({
@@ -39,7 +44,7 @@ const MenuBar = (user) => {
             </button>
           </ChangePassword>
           {isAdmin ? (
-            <CreateAndEditUser user={user.user} action="create">
+            <CreateAndEditUser user={user} action="create">
               <div className="flex items-center justify-center">
                 <button
                   data-tooltip-target="tooltip-new"

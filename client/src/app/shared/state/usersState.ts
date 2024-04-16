@@ -1,4 +1,4 @@
-import { atom, useAtom } from "jotai";
+import { atom } from "jotai";
 import { IUser } from "../interfaces/user";
 import UserService from "../services/users";
 

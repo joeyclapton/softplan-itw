@@ -28,7 +28,7 @@ type Props = {
 };
 
 const CreateAndEditUser = ({ children, user, action }: Props) => {
-  const [users, setUsers] = useAtom(usersAtom);
+  const [_, setUsers] = useAtom(usersAtom);
   const isCreate = action === "create";
   const defaultValues =
     action === "create"

@@ -13,7 +13,6 @@ import { signIn } from "next-auth/react";
 
 export default function ProfileForm() {
   const router = useRouter();
-
   const formSchema = z.object({
     email: z.string(),
     password: z.string(),
@@ -29,18 +28,18 @@ export default function ProfileForm() {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const { email, password } = values;
 
-    const result = await signIn("credentials", {
-      email,
-      password,
-      redirect: false,
-    });
-
-    if (result?.error) {
-      toast.error("Usuário não encontrado");
-      return;
+    try {
+      await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+      router.replace("/admin");
+    } catch (error) {
+      toast.error("Wrong email or password");
     }
 
-    router.replace("/admin");
+
   };
 
   return (

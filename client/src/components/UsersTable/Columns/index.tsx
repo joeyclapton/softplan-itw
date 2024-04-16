@@ -1,7 +1,6 @@
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -15,12 +14,18 @@ import {
   deleteUser,
   usersAtom,
 } from "@/app/shared/state/usersState";
+import { IUser } from "@/app/shared/interfaces/user";
+import { ColumnDef } from "@tanstack/react-table";
 
-const columns = (user, onFetchData: (id: number) => void) => {
-  const isAdmin = user.user.isAdmin;
+type Props = {
+  user: IUser, 
+}
+
+const columns = ({ user }: Props) => {
+  const isAdmin = user?.isAdmin;
   const [_, setUsers] = useAtom(usersAtom);
 
-  const actions = {
+  const actions: ColumnDef<IUser> = {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
@@ -46,13 +51,13 @@ const columns = (user, onFetchData: (id: number) => void) => {
               className="block text-sm px-4 py-2 text-red-500 hover:bg-red-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
               onClick={() => {
                 try {
-                  onFetchData(id);
+                  
                   deleteUser(id)(setUsers);
-                  toast(`Usuário ${name} removido`, {
+                  toast(`${name} has been removed`, {
                     icon: "✅",
                   });
                 } catch (error) {
-                  toast.error("Erro ao remover usuário, tente novamente ou entre em contato com o suporte...");
+                  toast.error("Error on remove user, try again...");
                 }
               }}
             >
@@ -64,7 +69,7 @@ const columns = (user, onFetchData: (id: number) => void) => {
     },
   };
 
-  const columns = [
+  const columns: ColumnDef<IUser>[] = [
     {
       accessorKey: "avatar",
       header: "Profile",
