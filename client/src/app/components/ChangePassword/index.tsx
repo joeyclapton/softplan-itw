@@ -20,20 +20,20 @@ import UserService from "@/app/shared/services/users";
 const ChangePassword = ({ children, user }) => {
   const [password, setPassword] = useState<string>("");
   const userService = new UserService();
-
+  const _user = user.user;
   const onSubmit = (event) => {
     event.preventDefault();
-
-    const _user = user.user.user;
-
     try {
       userService.updateUser({
         ..._user,
         password,
       });
-      toast("Senha atualizada com sucesso ✅");
+      toast("Updated password", {
+        icon: "✅",
+      });
+      setPassword("");
     } catch (error) {
-      toast.error("Erro ao atualizar a senha.");
+      toast.error("Error on updating password");
     }
   };
 
@@ -47,10 +47,19 @@ const ChangePassword = ({ children, user }) => {
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>Edit your password</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile password here. Click save when you&rsquo;re done.
-          </DialogDescription>
+          <div className="mb-8">
+            <div className="flex flex-col items-center">
+              <img className="w-24 h-24 mb-3 rounded-full shadow-lg" src={_user.avatar} alt={_user?.name} />
+              <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">{_user?.name}</h5>
+              <span className="text-sm text-gray-500 dark:text-gray-400">{_user.job}</span>
+            </div>
+          </div>
+          <div>
+            <DialogTitle>Edit your password</DialogTitle>
+            <DialogDescription>
+              Make changes to your profile password here. Click save when you&rsquo;re done.
+            </DialogDescription>
+          </div>
         </DialogHeader>
         <form onSubmit={onSubmit}>
           <div className="grid gap-4 py-4">
@@ -63,7 +72,9 @@ const ChangePassword = ({ children, user }) => {
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="submit">Save changes</Button>
+              <Button type="submit" disabled={!password}>
+                Save changes
+              </Button>
             </DialogClose>
           </DialogFooter>
         </form>
