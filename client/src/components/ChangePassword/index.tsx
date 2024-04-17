@@ -72,9 +72,9 @@ const ChangePassword = ({ children, user }: Props) => {
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="name" className="text-right">
-                New Password
+                <span>New Password</span>
               </Label>
-              <Input id="password" type="password" value={password} className="col-span-3" onInput={onChangePassword} />
+              <Input data-testid="password" id="password" type="password" value={password} className="col-span-3" onInput={onChangePassword} />
             </div>
           </div>
           <DialogFooter>

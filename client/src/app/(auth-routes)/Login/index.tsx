@@ -28,18 +28,18 @@ export default function ProfileForm() {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const { email, password } = values;
 
-    try {
-      await signIn("credentials", {
+      const result = await signIn("credentials", {
         email,
         password,
         redirect: false,
       });
+
+      if(result?.error) {
+        toast.error("Wrong email or password");
+        return;
+      }
       router.replace("/admin");
-    } catch (error) {
-      toast.error("Wrong email or password");
-    }
-
-
+  
   };
 
   return (
