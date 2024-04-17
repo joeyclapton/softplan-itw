@@ -40,7 +40,7 @@ Para rodar os testes, rode o seguinte comando
 ```
 
 ## Deploy
-Foi usado a Vercel para deploy da aplicação, pode ser acessado por [https://softplan-itw.vercel.app/](softplan-itw)
+Foi usado a Vercel para deploy da aplicação, pode ser acessado por https://softplan-itw.vercel.app/
 
 
 ## Usuário para login no sistema
