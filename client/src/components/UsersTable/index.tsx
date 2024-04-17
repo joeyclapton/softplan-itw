@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Toaster } from "react-hot-toast";
 
-import columns from "./Columns";
+import useColumns from "./Columns";
 import { useEffect } from "react";
 
 type Props = {
@@ -40,6 +40,7 @@ const UsersTable = ({ user }: Props) => {
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
   const [users, setUsers] = useAtom(usersAtom);
+  const columns = useColumns({ user })
 
   useEffect(() => {
     fetchUsers(setUsers);
@@ -47,7 +48,7 @@ const UsersTable = ({ user }: Props) => {
 
   const table = useReactTable({
     data: users,
-    columns: columns({ user }),
+    columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),

@@ -21,7 +21,7 @@ type Props = {
   user: IUser, 
 }
 
-const columns = ({ user }: Props) => {
+const useColumns = ({ user }: Props) => {
   const isAdmin = user?.isAdmin;
   const [_, setUsers] = useAtom(usersAtom);
 
@@ -111,4 +111,4 @@ const columns = ({ user }: Props) => {
   return isAdmin ? [...columns, actions] : columns;
 };
 
-export default columns;
+export default useColumns;
