@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, ReactNode } from "react";
+import React, { useState, ReactNode } from "react";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import {
@@ -27,7 +27,7 @@ const ChangePassword = ({ children, user }: Props) => {
   const [password, setPassword] = useState<string>("");
   const userService = new UserService();
 
-  const onSubmit = (event) => {
+  const onSubmit = (event:  React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     
     try {

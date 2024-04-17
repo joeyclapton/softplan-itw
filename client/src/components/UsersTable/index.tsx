@@ -3,9 +3,8 @@
 import * as React from "react";
 import { useAtom } from 'jotai'
 import { fetchUsers, usersAtom } from "@/app/shared/state/usersState";
-import { CaretSortIcon, ChevronDownIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
+import {  ChevronDownIcon } from "@radix-ui/react-icons";
 import {
-  ColumnDef,
   ColumnFiltersState,
   SortingState,
   VisibilityState,
@@ -20,7 +19,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { IUser } from "@/app/shared/interfaces/user";
-import UserService from "@/app/shared/services/users";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -37,7 +35,6 @@ type Props = {
 }
 
 const UsersTable = ({ user }: Props) => {
-  const userService = new UserService();
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
@@ -46,7 +43,7 @@ const UsersTable = ({ user }: Props) => {
 
   useEffect(() => {
     fetchUsers(setUsers);
-  }, []);
+  }, [setUsers]);
 
   const table = useReactTable({
     data: users,

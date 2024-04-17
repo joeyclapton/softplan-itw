@@ -52,7 +52,7 @@ const columns = ({ user }: Props) => {
               onClick={() => {
                 try {
                   
-                  deleteUser(id)(setUsers);
+                  id && deleteUser(id)(setUsers);
                   toast(`${name} has been removed`, {
                     icon: "✅",
                   });

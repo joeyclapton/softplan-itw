@@ -1,4 +1,4 @@
-import { nextAuthOptions } from "@/app/api/auth/[...nextauth]/route";
+import nextAuthOptions from "@/app/shared/types/next-auth-options";
 import { getServerSession } from "next-auth";
 import UsersTable from "@/components/UsersTable";
 import MenuBar from "@/components/MenuBar";
