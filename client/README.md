@@ -62,7 +62,7 @@ Perfil User:
 ## Jornada do usuário
 ![image](https://github.com/joeyclapton/softplan-itw/assets/32145647/9bf1417a-fc25-4966-9468-20b8e00aa9fc)
 
-## Utilização da aplicação
+## Vídeo utilizando a aplicação
 https://drive.google.com/file/d/1z_vFGmXPpteh5f_Y80n_1jzCzYCNphiy/view?usp=drive_link
 
 ## Stack utilizada
