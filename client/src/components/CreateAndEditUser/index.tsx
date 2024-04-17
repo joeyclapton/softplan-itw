@@ -173,7 +173,7 @@ const CreateAndEditUser = ({ children, user, action }: Props) => {
             />
             <DialogFooter>
               <DialogClose asChild>
-                <Button type="submit" disabled={!isFormValid}>
+                <Button type="submit">
                   {isCreate ? "Create" : "Update"}
                 </Button>
               </DialogClose>
