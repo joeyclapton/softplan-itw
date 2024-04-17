@@ -2,27 +2,22 @@ import nextAuthOptions from "@/app/shared/types/next-auth-options";
 import { getServerSession } from "next-auth";
 import UsersTable from "@/components/UsersTable";
 import MenuBar from "@/components/MenuBar";
+import Header from "@/components/Header";
 
 const AdminPage = async () => {
   const user = await getServerSession(nextAuthOptions);
   return (
-    <div>
-      {
+    <main>
+    {
         user && (
-          <>
-            <header className="p-8">
-              <h4 className="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Hello, </span>
-                <span>{user.name}</span>
-              </h4>
-            </header>
-
+          <div>
+            <Header user={user} />
             <MenuBar user={user} />
             <UsersTable user={user} />
-          </>
+          </div>
         )
       }
-    </div>
+    </main>
   );
 };
 
