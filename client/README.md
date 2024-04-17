@@ -73,7 +73,7 @@ Perfil User:
 - senha: Et8EcrJoO2AwFjK
 
 ## Jornada do usuário
-![image](https://github.com/joeyclapton/softplan-itw/assets/32145647/cd242654-1160-439c-93e7-8c01ab7b9c5b)
+![image](https://github.com/joeyclapton/softplan-itw/assets/32145647/9bf1417a-fc25-4966-9468-20b8e00aa9fc)
 
 
 ## Stack utilizada
