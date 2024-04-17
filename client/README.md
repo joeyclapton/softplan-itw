@@ -55,6 +55,9 @@ Para rodar os testes, rode o seguinte comando
   npm run test
 ```
 
+## Deploy
+Foi usado a Vercel para deploy da aplicação, pode ser acessado por [https://softplan-itw.vercel.app/](softplan-itw)
+
 
 ## Usuário para login no sistema
 
@@ -75,6 +78,8 @@ Perfil User:
 ## Jornada do usuário
 ![image](https://github.com/joeyclapton/softplan-itw/assets/32145647/9bf1417a-fc25-4966-9468-20b8e00aa9fc)
 
+## Utilização da aplicação
+(https://drive.google.com/file/d/1z_vFGmXPpteh5f_Y80n_1jzCzYCNphiy/view?usp=drive_link)[Video on Google Drive]
 
 ## Stack utilizada
 
